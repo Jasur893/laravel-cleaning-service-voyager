@@ -1,6 +1,5 @@
 <?php
 
-use App\Http\Controllers\Api\PostApiController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -18,8 +17,3 @@ use Illuminate\Support\Facades\Route;
 Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
     return $request->user();
 });
-
-//Route::get('posts', [PostApiController::class, 'index']);
-//Route::get('posts/{post}', [PostApiController::class, 'show']);
-
-Route::apiResource('posts', PostApiController::class);

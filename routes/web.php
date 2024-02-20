@@ -6,8 +6,10 @@ use App\Http\Controllers\LanguageController;
 use App\Http\Controllers\NotificationController;
 use App\Http\Controllers\PageController;
 use App\Http\Controllers\PostController;
+use App\Http\Controllers\SendContactController;
 use App\Http\Controllers\TagController;
 use Illuminate\Support\Facades\Route;
+use TCG\Voyager\Facades\Voyager;
 
 /*
 |--------------------------------------------------------------------------
@@ -40,9 +42,15 @@ Route::get('language/{locale}', [LanguageController::class, 'change_locale'])->n
 
 Route::get('tags/{tag}', [TagController::class, 'show'])->name('tags.show');
 
+Route::post('sendcontact', [SendContactController::class, 'sendContact'])->name('sendcontact');
+
 Route::resources([
     'posts' => PostController::class,
     'posts.comments' => CommentController::class,
-//    'users' => UserController::class,
     'notifications' => NotificationController::class,
 ]);
+
+
+Route::group(['prefix' => 'admin'], function () {
+    Voyager::routes();
+});

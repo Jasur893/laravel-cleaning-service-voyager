@@ -58,7 +58,6 @@ class  AuthController extends Controller
         $validated['password'] = Hash::make($validated['password']);
 
         $user = User::create($validated);
-        $user->roles()->attach(3);
 
         auth()->login($user);
 

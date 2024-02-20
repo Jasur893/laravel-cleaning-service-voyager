@@ -24,7 +24,7 @@ class NotificationController extends Controller
     public function index()
     {
         return view('notifications.index')->with([
-            'notifications' => auth()->user()->notifications()->paginate(5),
+            'notifications' => auth()->user()->notifications()->paginate(4),
         ]);
     }
 

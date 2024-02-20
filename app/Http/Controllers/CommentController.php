@@ -75,7 +75,8 @@ class CommentController extends Controller
      */
     public function edit(Post $post, Comment $comment)
     {
-        Gate::authorize('update', [$comment, 'admin']);
+        $this->authorize('update', $comment);
+
 
         return view('comments.edit')->with([
             'post' => $post,
@@ -93,7 +94,7 @@ class CommentController extends Controller
      */
     public function update(StoreCommentRequest $request, Post $post, Comment $comment)
     {
-        Gate::authorize('update', [$comment, 'admin']);
+        $this->authorize('update', $comment);
 
         $com = $post->comments()->where('id', $comment->id)->first();
 
@@ -113,7 +114,7 @@ class CommentController extends Controller
      */
     public function destroy(Post $post, Comment $comment)
     {
-        Gate::authorize('delete', [$comment, 'admin']);
+        $this->authorize('delete', $comment);
 
         $post->comments()->where('id', $comment->id)->delete();
 

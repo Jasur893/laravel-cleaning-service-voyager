@@ -9,6 +9,7 @@ use App\Models\Category;
 use App\Models\Post;
 use App\Models\Tag;
 use App\Notifications\PostCreated as NotificationPostCreated;
+use Carbon\Carbon;
 use Illuminate\Contracts\Foundation\Application;
 use Illuminate\Contracts\View\Factory;
 use Illuminate\Contracts\View\View;
@@ -60,8 +61,12 @@ class PostController extends Controller
      */
     public function store(StorePostRequest $request)
     {
+        $month = Carbon::now()->monthName;
+        $year = Carbon::now()->year;
+        $monthYear = "$month$year";
+
         if ($request->hasFile('photo')) {
-            $path = $request->file('photo')->store('post-photos');
+            $path = $request->file('photo')->store("posts/$monthYear", 'public');
         }
 
         $post = Post::create([
@@ -82,7 +87,7 @@ class PostController extends Controller
         // event
         PostCreated::dispatch($post);
 
-        // mail with queu
+//         mail with queu
         Mail::to($request->user())
             ->later(
                 now()->addSeconds(5),
@@ -121,7 +126,7 @@ class PostController extends Controller
      */
     public function edit(Post $post)
     {
-        Gate::authorize('update', [$post, 'admin']);
+        $this->authorize('update', $post);
 
         return view('posts.edit')->with(['post' => $post]);
     }
@@ -136,14 +141,18 @@ class PostController extends Controller
      */
     public function update(StorePostRequest $request, Post $post): RedirectResponse
     {
-        Gate::authorize('update', [$post, 'admin']);
+        $this->authorize('update', $post);
+
+        $month = Carbon::now()->monthName;
+        $year = Carbon::now()->year;
+        $monthYear = "$month$year";
 
         if ($request->hasFile('photo')) {
             if (isset($post->photo)) {
                 Storage::delete($post->photo);
             }
 
-            $path = $request->file('photo')->store('post-photos');
+            $path = $request->file('photo')->store("posts/$monthYear", 'public');
         }
 
         $post->update([
@@ -164,7 +173,7 @@ class PostController extends Controller
      */
     public function destroy(Post $post)
     {
-        Gate::authorize('delete', [$post, 'admin']);
+        $this->authorize('delete', $post);
 
         if (isset($post->photo)) {
             Storage::delete($post->photo);

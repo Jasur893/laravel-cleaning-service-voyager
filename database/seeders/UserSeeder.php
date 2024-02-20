@@ -20,13 +20,6 @@ class UserSeeder extends Seeder
             'email' => 'john@example.com',
             'password' => Hash::make('123123'),
         ]);
-        $user->roles()->attach([1, 3]);
 
-        $user2 = User::create([
-            'name' => 'Mark',
-            'email' => 'mark@example.com',
-            'password' => Hash::make('123123'),
-        ]);
-        $user2->roles()->attach([2]);
     }
 }

@@ -4,6 +4,19 @@
     </x-slot:title>
     <!-- Carousel Start -->
     <div class="container-fluid p-0">
+        @if(session('success'))
+        <div class="col-12 mt-2">
+            <div class="container">
+                <div class="alert alert-success alert-dismissible fade show" role="alert">
+                    <strong>your message has been sent!</strong>
+                    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+            </div>
+        </div>
+        @endif
+
         <div id="header-carousel" class="carousel slide carousel-fade" data-ride="carousel">
             <ol class="carousel-indicators">
                 <li data-target="#header-carousel" data-slide-to="0" class="active"></li>

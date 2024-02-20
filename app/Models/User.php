@@ -9,7 +9,7 @@ use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Laravel\Sanctum\HasApiTokens;
 
-class User extends Authenticatable
+class User extends \TCG\Voyager\Models\User
 {
     use HasApiTokens, HasFactory, Notifiable;
 
@@ -62,21 +62,6 @@ class User extends Authenticatable
     public function comments()
     {
         return $this->hasMany(Post::class);
-    }
-
-    public function roles()
-    {
-        return $this->belongsToMany(Role::class);
-    }
-
-    public function hasRole($roleName)
-    {
-        foreach ($this->roles as $role) {
-            if ($role->name == $roleName) {
-                return true;
-            }
-        }
-        return false;
     }
 
     protected function name(): Attribute

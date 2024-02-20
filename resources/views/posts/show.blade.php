@@ -14,7 +14,7 @@
             <div class="row">
                 <div class="col-lg-8">
                     @auth()
-                        @canany(['update', 'delete'], [$post, 'admin'])
+                        @canany(['update', 'delete'], $post)
                             <div class="d-flex justify-content-end">
                                 <a class="btn btn-sm btn-outline-dark mr-2" href="{{ route('posts.edit', ['post' => $post->id]) }}">{{ __('Edit') }}</a>
                                 <form
@@ -58,13 +58,13 @@
 
                         @foreach($post->comments as $comment)
                         <div class="media mb-4">
-                            <img src="/img/user.jpg" alt="Image" class="img-fluid rounded-circle mr-3 mt-1" style="width: 45px;">
+                            <img src="{{ asset('storage/' . $comment->user->avatar) }}" alt="Image" class="img-fluid rounded-circle mr-3 mt-1" style="width: 45px;">
                             <div class="media-body">
                                 <h6>{{ $comment->user->name }}<small class="ml-2"><i>{{ $comment->created_at }}</i></small></h6>
                                 <p>{{ $comment->body }}</p>
                             </div>
                             @auth()
-                                @canany(['update', 'delete'], [$comment, 'admin'])
+                                @canany(['update', 'delete'], $comment)
                                     <div class="d-flex">
                                         <a class="text-black-50 mr-2" href="{{ route('posts.comments.edit', ['post' => $post->id, 'comment' => $comment->id]) }}"><i class="fa-solid fa-pen"></i></a>
                                         <form
@@ -106,7 +106,7 @@
 
                 <div class="col-lg-4 mt-5 mt-lg-0">
                     <div class="d-flex flex-column text-center bg-secondary rounded mb-5 py-5 px-4">
-                        <img src="/img/user.jpg" class="img-fluid rounded-circle mx-auto mb-3" style="width: 100px;">
+                        <img src="{{ asset('storage/'. $post->user->avatar) }}" class="img-fluid rounded-circle mx-auto mb-3" style="width: 100px;">
                         <h3 class="text-white mb-3">{{ $post->user->name }}</h3>
                         <p class="text-white m-0">Conset elitr erat vero dolor ipsum et diam, eos dolor lorem ipsum, ipsum ipsum sit no u est. Guber ea ipsum erat kasd amet est elitr ea sit.</p>
                     </div>
@@ -146,7 +146,7 @@
                         <h3 class="mb-4 section-title">Recent Post</h3>
                         @foreach($recent_posts as $post)
                             <div class="d-flex align-items-center border-bottom mb-3 pb-3">
-                                <img class="img-fluid rounded" src="/img/blog-1.jpg" style="width: 80px; height: 80px; object-fit: cover;" alt="">
+                                <img class="img-fluid rounded" src="{{ 'storage/'. $post->photo }}" style="width: 80px; height: 80px; object-fit: cover;" alt="">
                                 <div class="d-flex flex-column pl-3">
                                     <a class="text-dark mb-2" href="{{ route('posts.show', ['post' => $post->id]) }}">{{ $post->title }}</a>
                                     <div class="d-flex">
