@@ -16,6 +16,7 @@ class Tag extends Model
         return $this->belongsToMany(Post::class);
     }
 
+
     public function getRandom()
     {
         if (is_null($this->posts()->inRandomOrder()->first()) ) {
