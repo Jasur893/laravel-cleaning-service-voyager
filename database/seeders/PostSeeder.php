@@ -16,9 +16,6 @@ class PostSeeder extends Seeder
      */
     public function run()
     {
-//        $tags = Tag::all();
-
-
         $posts = Post::factory()->count(20)->create();
 
         foreach ($posts as $post) {
